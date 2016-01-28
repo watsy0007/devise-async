@@ -18,3 +18,4 @@ test/version_tmp
 tmp
 test/support/rails_app/log/*
 test/support/rails_app/db/*.sqlite3
+.idea

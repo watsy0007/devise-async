@@ -24,7 +24,7 @@ module Devise
       # to capture all email notifications and enqueue it for background
       # processing instead of sending it inline as devise does by
       # default.
-      def send_devise_notification(notification, *args)
+      def send_devise_notification(notification, token, *args)
         return super unless Devise::Async.enabled
 
         # The current locale has to be remembered until the actual sending
@@ -36,7 +36,7 @@ module Devise
         # If the record is dirty we keep pending notifications to be enqueued
         # by the callback and avoid before commit job processing.
         if changed?
-          devise_pending_notifications << [ notification, args ]
+          devise_pending_notifications << [ notification, token, args ]
         # If the record isn't dirty (aka has already been saved) enqueue right away
         # because the callback has already been triggered.
         else
