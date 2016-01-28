@@ -49,8 +49,7 @@ module Devise
         devise_pending_notifications.each do |notification, token, args|
           # Use `id.to_s` to avoid problems with mongoid 2.4.X ids being serialized
           # wrong with YAJL.
-          args.unshift(token)
-          Devise::Async::Worker.enqueue(notification, self.class.name, self.id.to_s, *args)
+          Devise::Async::Worker.enqueue(notification, self.class.name, self.id.to_s, *(args.unshift(token)))
         end
         @devise_pending_notifications = []
       end
