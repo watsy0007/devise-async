@@ -40,7 +40,7 @@ module Devise
         # If the record isn't dirty (aka has already been saved) enqueue right away
         # because the callback has already been triggered.
         else
-          Devise::Async::Worker.enqueue(notification, self.class.name, self.id.to_s, *args)
+          Devise::Async::Worker.enqueue(notification, self.class.name, self.id.to_s, *(args.unshift(token)))
         end
       end
 
